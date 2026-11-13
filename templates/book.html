@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Book room {{ room.room_number }}{% endblock %}
+{% block hero %}
+<section class="page-banner">
+  <h1>Complete your booking</h1>
+  <p>Room {{ room.room_number }} ({{ room.type_name }}) &middot; {{ check_in }} &rarr; {{ check_out }}</p>
+</section>
+{% endblock %}
+{% block mainclass %}lifted{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="chips">
+    <span class="chip">📅 {{ check_in }} → {{ check_out }}</span>
+    <span class="chip">🌙 {{ nights }} night(s)</span>
+    <span class="chip">👥 {{ guests }} guest(s)</span>
+  </div>
+  <div class="price">Total: ₹{{ '{:,.0f}'.format(total) }}</div>
+</div>
+<div class="card">
+  <h3>Guest details</h3>
+  <form method="post" class="inline">
+    <input type="hidden" name="check_in" value="{{ check_in }}">
+    <input type="hidden" name="check_out" value="{{ check_out }}">
+    <input type="hidden" name="guests" value="{{ guests }}">
+    <label>Full name <input name="full_name" required></label>
+    <label>Email <input type="email" name="email" required></label>
+    <label>Phone <input name="phone"></label>
+    <label>Payment method
+      <select name="method"><option>CARD</option><option>UPI</option><option>CASH</option></select>
+    </label>
+    <button type="submit">✅ Confirm &amp; pay</button>
+  </form>
+  <p class="muted">Payment is simulated for this demo.</p>
+</div>
+{% endblock %}

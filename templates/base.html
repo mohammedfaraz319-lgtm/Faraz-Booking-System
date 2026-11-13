@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Home{% endblock %} | Faraz Booking System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <p class="logo">🏨 Faraz <span>Booking</span></p>
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+    <a href="{{ url_for('admin') }}">Admin</a>
+  </nav>
+</header>
+{% block hero %}{% endblock %}
+<main class="{% block mainclass %}{% endblock %}">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, msg in messages %}<div class="flash {{ category }}">{{ msg }}</div>{% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>&copy; 2026 <strong>Faraz Booking System</strong> &middot; Developed by <strong>Faraz</strong> &middot; Built with Flask &amp; SQLite</footer>
+</body>
+</html>

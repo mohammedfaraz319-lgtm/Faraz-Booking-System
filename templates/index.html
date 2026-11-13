@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block hero %}
+<section class="hero">
+  <h1>Book your perfect stay with <span>Faraz</span></h1>
+  <p>Search live availability, reserve in seconds and manage your bookings, all in one place.</p>
+  <p class="dev-badge">👨‍💻 Developed by Faraz</p>
+</section>
+{% endblock %}
+{% block mainclass %}lifted{% endblock %}
+{% block content %}
+{% set icons = {'Standard': '🛏️', 'Deluxe': '🌆', 'Suite': '👑'} %}
+<div class="card">
+  <form class="inline" action="{{ url_for('search') }}" method="get">
+    <label>Check-in <input type="date" name="check_in" min="{{ today }}" required></label>
+    <label>Check-out <input type="date" name="check_out" min="{{ today }}" required></label>
+    <label>Guests <input type="number" name="guests" value="1" min="1" max="6" required></label>
+    <button type="submit">🔍 Search rooms</button>
+  </form>
+</div>
+
+<h2 class="section-title">Our rooms <small>Pick the style that suits your stay</small></h2>
+<div class="grid">
+  {% for t in types %}
+  <div class="card room-card">
+    <div class="room-top {{ t.type_name }}">{{ icons.get(t.type_name, '🏨') }}</div>
+    <div class="room-body">
+      <h3>{{ t.type_name }}</h3>
+      <p class="muted">{{ t.description }}</p>
+      <div class="chips"><span class="chip">👥 Up to {{ t.capacity }} guests</span></div>
+      <div class="price">₹{{ '{:,.0f}'.format(t.price_per_night) }} <small>/ night</small></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Why book with us</h2>
+<div class="features">
+  <div class="card feature"><div class="ico">⚡</div><h4>Instant booking</h4><p>Confirmation in seconds</p></div>
+  <div class="card feature"><div class="ico">🔒</div><h4>No double booking</h4><p>Protected by SQL triggers</p></div>
+  <div class="card feature"><div class="ico">💳</div><h4>Easy payment</h4><p>Card, UPI or cash</p></div>
+  <div class="card feature"><div class="ico">↩️</div><h4>Free cancellation</h4><p>Automatic refund</p></div>
+</div>
+{% endblock %}

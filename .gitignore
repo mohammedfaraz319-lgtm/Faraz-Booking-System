@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+hotel.db
+.env
+.DS_Store

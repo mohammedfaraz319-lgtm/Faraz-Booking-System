@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}My bookings{% endblock %}
+{% block hero %}
+<section class="page-banner"><h1>My bookings</h1><p>Enter your email to view or cancel your reservations</p></section>
+{% endblock %}
+{% block mainclass %}lifted{% endblock %}
+{% block content %}
+<div class="card">
+  <form method="post" class="inline">
+    <label>Your email <input type="email" name="email" value="{{ email }}" placeholder="aarav@example.com" required></label>
+    <button type="submit">🔍 Find bookings</button>
+  </form>
+</div>
+{% if bookings %}
+<div class="table-wrap">
+<table>
+  <thead><tr><th>#</th><th>Room</th><th>Dates</th><th>Nights</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+  <tbody>
+  {% for b in bookings %}
+  <tr>
+    <td>{{ b.booking_id }}</td>
+    <td>{{ b.room_number }} ({{ b.type_name }})</td>
+    <td>{{ b.check_in }} &rarr; {{ b.check_out }}</td>
+    <td>{{ b.nights }}</td>
+    <td>₹{{ '{:,.0f}'.format(b.total_amount) }}</td>
+    <td><span class="badge {{ b.status }}">{{ b.status }}</span></td>
+    <td>
+      {% if b.status == 'CONFIRMED' %}
+      <form method="post" action="{{ url_for('cancel', booking_id=b.booking_id) }}"
+            onsubmit="return confirm('Cancel this booking?');">
+        <button class="danger" type="submit">Cancel</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

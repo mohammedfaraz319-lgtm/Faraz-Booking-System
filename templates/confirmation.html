@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Booking confirmed{% endblock %}
+{% block hero %}
+<section class="page-banner"><h1>Booking confirmed</h1><p>Thank you for choosing Faraz Booking System</p></section>
+{% endblock %}
+{% block mainclass %}lifted{% endblock %}
+{% block content %}
+<div class="card ticket">
+  <div class="tick">🎉</div>
+  <h2>Your stay is booked!</h2>
+  <p class="muted">Booking reference <strong>#{{ b.booking_id }}</strong></p>
+  <dl>
+    <div><dt>Guest</dt><dd>{{ b.full_name }}</dd></div>
+    <div><dt>Email</dt><dd>{{ b.email }}</dd></div>
+    <div><dt>Room</dt><dd>{{ b.room_number }} ({{ b.type_name }})</dd></div>
+    <div><dt>Guests</dt><dd>{{ b.guests }}</dd></div>
+    <div><dt>Check-in</dt><dd>{{ b.check_in }}</dd></div>
+    <div><dt>Check-out</dt><dd>{{ b.check_out }}</dd></div>
+  </dl>
+  <div class="price">Paid ₹{{ '{:,.0f}'.format(b.total_amount) }} <small>for {{ b.nights }} night(s)</small></div>
+  <a class="btn" href="{{ url_for('index') }}">Back to home</a>
+</div>
+{% endblock %}

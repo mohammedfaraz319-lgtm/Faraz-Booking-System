@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Available rooms{% endblock %}
+{% block hero %}
+<section class="page-banner">
+  <h1>Available rooms</h1>
+  <p>📅 {{ check_in }} to {{ check_out }} &middot; 👥 {{ guests }} guest(s)</p>
+</section>
+{% endblock %}
+{% block mainclass %}lifted{% endblock %}
+{% block content %}
+{% set icons = {'Standard': '🛏️', 'Deluxe': '🌆', 'Suite': '👑'} %}
+{% if rooms %}
+<div class="grid">
+  {% for r in rooms %}
+  <div class="card room-card">
+    <div class="room-top {{ r.type_name }}">{{ icons.get(r.type_name, '🏨') }}</div>
+    <div class="room-body">
+      <h3>Room {{ r.room_number }} &middot; {{ r.type_name }}</h3>
+      <p class="muted">{{ r.description }}</p>
+      <div class="chips">
+        <span class="chip">🏢 Floor {{ r.floor }}</span>
+        <span class="chip">👥 Sleeps {{ r.capacity }}</span>
+        <span class="chip">🌙 {{ r.nights }} night(s)</span>
+      </div>
+      <div class="price">₹{{ '{:,.0f}'.format(r.total) }} <small>total</small></div>
+      <a class="btn" href="{{ url_for('book', room_id=r.room_id, check_in=check_in, check_out=check_out, guests=guests) }}">Book now →</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card" style="text-align:center">
+  <h2>😕 No rooms available</h2>
+  <p class="muted">Every room is taken for those dates.</p>
+  <a class="btn" href="{{ url_for('index') }}">Try different dates</a>
+</div>
+{% endif %}
+{% endblock %}
